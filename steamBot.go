@@ -19,16 +19,18 @@ func getEnvVariable(key string) string {
 }
 
 func main() {
+	channelId := getEnvVariable("CHANNELID")
 	//initialize slack api connection 
 	api := slack.New(getEnvVariable("GOSECRET"))
 
-	channelID, timestamp, err := api.PostMessage(
-		"C034MB8U5M5",
+	//send hello world to channel id
+	_, timestamp, err := api.PostMessage(
+		channelId,
 		slack.MsgOptionText("Hello World", false),
 	)
 	if err != nil {
 		fmt.Printf("%s\n", err)
 	}
-	fmt.Printf("Message sent successfully to channel %s at %s", channelID, timestamp)
+	fmt.Printf("Message sent successfully to channel %s at %s", channelId, timestamp)
 
 }
