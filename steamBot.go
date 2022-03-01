@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 	"github.com/slack-go/slack"
@@ -23,10 +24,23 @@ func main() {
 	//initialize slack api connection 
 	api := slack.New(getEnvVariable("GOSECRET"))
 
+	//create slack attachment
+	attachment := slack.Attachment{
+		Pretext: "From the golang-steam-bot",
+		Text: "Hello World!",
+		Color: "#36a64f",
+		Fields: []slack.AttachmentField{
+			{
+				Title: "Date",
+				Value: time.Now().String(),
+			},
+		},
+	}
+
 	//send hello world to channel id
 	_, timestamp, err := api.PostMessage(
 		channelId,
-		slack.MsgOptionText("Hello World", false),
+		slack.MsgOptionAttachments(attachment),
 	)
 	if err != nil {
 		fmt.Printf("%s\n", err)
