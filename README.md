@@ -14,8 +14,22 @@ This project was created to provide just a tiny bit of relief to those gamers gr
 6. Enable Event Subscriptions in the app settings in the Slack UI. (ensure connections:write permissions are granted)
 7. An app-level token will be generated, keep note of that as well so we can communicate with the slack events API. 
 8. Clone this repo into a new directory. 
-9. In the project directory root, create a *.env* file. within that file, place the following key names with their corresponding tokens. \n GOSECRET=botToken \n CHANNELID=channelID \n STEAMBOT-WEBSOCKET=appToken
+9. Retrieve the channel ID in which you want this bot to work in. The channel ID can be found by looking at channel details in the slack app, or in the url if using the web ui for slack. 
+10. Invite the bot to the desired channel. 
+11. In the project directory root, create a *.env* file. within that file, place the following key names with their corresponding tokens.   
+
+GOSECRET=botToken
+
+CHANNELID=channelID 
+
+STEAMBOT-WEBSOCKET=appToken
 
 ## How to use
+
+After install instructions have been completed above, navigate to the project directory and run the following command : 
+
+> go run scrapeBot.go 
+
+Use @ to mention the bot by name in the same channel whose ID you used in the .env file. Once mentioned, the bot will scrape and serve you the top selling discounted games on the steam store, and print them out to the slack channel. 
 
 ### Gif of working slackbot 
