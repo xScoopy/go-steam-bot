@@ -19,7 +19,7 @@ func TestFormatGames(t *testing.T) {
 		testGames[i].ReleaseDate = "Jan 01, 2022"
 	}
 	//remove any character in the following string to see the test fail
-	expectedOutput := "Title: *FunGame* Price: *$40.00* Release: *Jan 01, 2022*\n"
+	expectedOutput := "\nTitle: *FunGame* \nPrice:(original vs discounted) *$40.00* \nRelease: *Jan 01, 2022*\n"
 	tests := []test{
 		{input: testGames, output: expectedOutput},
 	}
