@@ -1,4 +1,4 @@
-module steamBot
+module github.com/xScoopy/go-steam-bot
 
 go 1.17
 
