@@ -66,14 +66,18 @@ func scrapeSteam() []GameInfo {
 	c.Visit("https://store.steampowered.com/search/?filter=topsellers")
 
 	//create json for data persistence points on rubric
-	createJson(games)
+	createJson(games, "output.json")
 
 	return games
 }
 
-func createJson(games []GameInfo){
+func createJson(games []GameInfo, fileName string) error {
 	jsonFile, _ := json.MarshalIndent(games, "", " ")
-	_ = ioutil.WriteFile("output.json", jsonFile, 0644)
+	err := ioutil.WriteFile(fileName, jsonFile, 0644)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func formatGames(games []GameInfo) string {
@@ -129,6 +133,9 @@ func postSlackMessage(message string, chanID string, api *slack.Client) {
 		}
 		fmt.Printf("Message sent successfully to channel %s at %s", chanID, timestamp)
 }
+
+
+
 
 func main() {
 	channelId := getEnvVariable("CHANNELID")
