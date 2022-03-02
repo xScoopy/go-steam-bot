@@ -1,5 +1,7 @@
 # golangSlackBot
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/xScoopy/goSlackBot)](https://goreportcard.com/report/github.com/xScoopy/goSlackBot)
+
 > Code for setting up Socket mode and message posting were adapted from multiple tutorials and the slack documentation. 
 > big thank you to 'Tech and beyond with Moss' on youtube and 'Percy Bolmer' for their intuitive articles and videos. 
 
