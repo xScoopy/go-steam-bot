@@ -9,7 +9,7 @@ import (
 
 func TestFormatGames(t *testing.T) {
 	type test struct {
-		input []GameInfo
+		input  []GameInfo
 		output string
 	}
 	testGames := make([]GameInfo, 1)
@@ -33,9 +33,9 @@ func TestFormatGames(t *testing.T) {
 
 func TestCreateJson(t *testing.T) {
 	type test struct {
-		input []GameInfo
+		input    []GameInfo
 		fileName string
-		output error
+		output   error
 	}
 	testGames := make([]GameInfo, 1)
 	for i := range testGames {
@@ -60,7 +60,7 @@ func BenchmarkFormatGames(b *testing.B) {
 		gamesForBenchmarking[i].Name = "gamename"
 		gamesForBenchmarking[i].Price = "gameprice"
 		gamesForBenchmarking[i].ReleaseDate = "gamerelease"
-}
+	}
 	for i := 0; i < b.N; i++ {
 		formatGames(gamesForBenchmarking)
 	}

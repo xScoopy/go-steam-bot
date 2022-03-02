@@ -20,8 +20,8 @@ import (
 
 //struct to hold game data
 type GameInfo struct {
-	Name string
-	Price string
+	Name        string
+	Price       string
 	ReleaseDate string
 }
 
@@ -42,7 +42,7 @@ func scrapeSteam() []GameInfo {
 	games := make([]GameInfo, 0)
 
 	c.OnHTML("a.search_result_row", func(e *colly.HTMLElement) {
-		e.ForEach("div.responsive_search_name_combined", func(i int, h *colly.HTMLElement){
+		e.ForEach("div.responsive_search_name_combined", func(i int, h *colly.HTMLElement) {
 			if h.ChildText("div.discounted") != "" {
 				newGame := GameInfo{}
 				newGame.Name = h.ChildText("span.title")
@@ -50,9 +50,9 @@ func scrapeSteam() []GameInfo {
 				newGame.Price = h.ChildText("div.discounted")
 				games = append(games, newGame)
 			}
-		} )
+		})
 	})
-	
+
 	c.OnRequest(func(r *colly.Request) {
 		fmt.Println("Visiting", r.URL)
 	})
@@ -90,14 +90,13 @@ func formatGames(games []GameInfo) string {
 	return formattedGames
 }
 
-
 //func to handle events from the socket properly based on event type.
 func handleEventMessage(event slackevents.EventsAPIEvent, api *slack.Client, chanID string) error {
 	switch event.Type {
-		//if its a callback event 
+	//if its a callback event
 	case slackevents.CallbackEvent:
 		innerEvent := event.InnerEvent
-		switch ev := innerEvent.Data.(type){
+		switch ev := innerEvent.Data.(type) {
 		case *slackevents.AppMentionEvent:
 			log.Print(ev)
 			//scrape steam best sellers and return slice of games
@@ -116,8 +115,8 @@ func postSlackMessage(message string, chanID string, api *slack.Client) {
 	//create slack attachment
 	attachment := slack.Attachment{
 		Pretext: "Freshly Scraped Steam Top Sellers",
-		Text: "Served up at your command",
-		Color: "#36a64f",
+		Text:    "Served up at your command",
+		Color:   "#36a64f",
 		Fields: []slack.AttachmentField{
 			{
 				Title: "Game",
@@ -125,19 +124,16 @@ func postSlackMessage(message string, chanID string, api *slack.Client) {
 			},
 		},
 	}
-		//send hello world to channel id
-		_, timestamp, err := api.PostMessage(
-			chanID,
-			slack.MsgOptionAttachments(attachment),
-		)
-		if err != nil {
-			fmt.Printf("%s\n", err)
-		}
-		fmt.Printf("Message sent successfully to channel %s at %s", chanID, timestamp)
+	//send hello world to channel id
+	_, timestamp, err := api.PostMessage(
+		chanID,
+		slack.MsgOptionAttachments(attachment),
+	)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+	}
+	fmt.Printf("Message sent successfully to channel %s at %s", chanID, timestamp)
 }
-
-
-
 
 func main() {
 	channelId := getEnvVariable("CHANNELID")
@@ -146,12 +142,11 @@ func main() {
 
 	//setup slack websocket for listening to events
 	client := slack.New(bottoken, slack.OptionDebug(true), slack.OptionAppLevelToken(apptoken))
-	socketClient:= socketmode.New(
+	socketClient := socketmode.New(
 		client,
 		socketmode.OptionDebug(true),
 		//logger
 		socketmode.OptionLog(log.New(os.Stdout, "socketmode: ", log.Lshortfile|log.LstdFlags)),
-
 	)
 
 	//context to cancel a goroutine
@@ -160,36 +155,34 @@ func main() {
 
 	//goroutine to handle events from the socket client
 	go func(ctx context.Context, client *slack.Client, socketClient *socketmode.Client) {
-		//for/while loop for context cancellation or incoming events. 
+		//for/while loop for context cancellation or incoming events.
 		for {
 			select {
-				// if context cancel, exit goroutine
+			// if context cancel, exit goroutine
 			case <-ctx.Done():
 				log.Println("Shutting down socketmode listener")
 				return
 			case event := <-socketClient.Events:
 				//New events are in here
 				switch event.Type {
-					//handle eventapi events
+				//handle eventapi events
 				case socketmode.EventTypeEventsAPI:
 					eventsAPIEvent, ok := event.Data.(slackevents.EventsAPIEvent)
 					if !ok {
 						log.Printf("Could not type cast event to the event: %v\n", event)
 						continue
 					}
-					//send ack to slack server 
+					//send ack to slack server
 					socketClient.Ack(*event.Request)
 					//custom func to handle event types to avoid too much nested switching
 					err := handleEventMessage(eventsAPIEvent, client, channelId)
 					if err != nil {
 						log.Panic("Unable to handle this type of event")
 					}
-				} 
+				}
 			}
 		}
 	}(ctx, client, socketClient)
-
-
 
 	//run socket to block program from ending and listen to any incoming events
 	socketClient.Run()
