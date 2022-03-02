@@ -1,4 +1,4 @@
-module github.com/xScoopy/go-steam-bot
+module github.com/xScoopy/golangSlackBot
 
 go 1.17
 
