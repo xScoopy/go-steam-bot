@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"time"
@@ -63,13 +65,21 @@ func scrapeSteam() []GameInfo {
 
 	c.Visit("https://store.steampowered.com/search/?filter=topsellers")
 
+	//create json for data persistence points on rubric
+	createJson(games)
+
 	return games
+}
+
+func createJson(games []GameInfo){
+	jsonFile, _ := json.MarshalIndent(games, "", " ")
+	_ = ioutil.WriteFile("output.json", jsonFile, 0644)
 }
 
 func formatGames(games []GameInfo) string {
 	formattedGames := ""
 	for _, game := range games {
-		formattedGames += "Title: " + game.Name + " Price: " + game.Price + " Release: " + game.ReleaseDate + "\n"
+		formattedGames += "Title: *" + game.Name + "* Price: *" + game.Price + "* Release: *" + game.ReleaseDate + "*\n"
 	}
 	return formattedGames
 }
