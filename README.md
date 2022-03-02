@@ -1,4 +1,4 @@
-# go-steam-bot
+# golangSlackBot
 
 > Code for setting up Socket mode and message posting were adapted from multiple tutorials and the slack documentation. 
 > big thank you to 'Tech and beyond with Moss' on youtube and 'Percy Bolmer' for their intuitive articles and videos. 
@@ -29,9 +29,11 @@ STEAMBOT-WEBSOCKET=appToken
 
 ## How to use
 
-After install instructions have been completed above, navigate to the project directory and run the following command : 
+After install instructions have been completed above, navigate to the project directory and run the following commands : 
 
-> go run scrapeBot.go 
+> go build
+
+>./golangSlackBot
 
 Use @ to mention the bot by name in the same channel whose ID you used in the .env file. Once mentioned, the bot will scrape and serve you the top selling discounted games on the steam store, and print them out to the slack channel. 
 
