@@ -1,4 +1,4 @@
-module github.com/xScoopy/golangSlackBot
+module github.com/xScoopy/goSlackBot
 
 go 1.17
 
