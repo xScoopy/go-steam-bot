@@ -33,4 +33,4 @@ After install instructions have been completed above, navigate to the project di
 Use @ to mention the bot by name in the same channel whose ID you used in the .env file. Once mentioned, the bot will scrape and serve you the top selling discounted games on the steam store, and print them out to the slack channel. 
 
 ### Gif of working slackbot 
-![alt text](Mar-01-2022 20-31-58.gif "Demo Giphy")
+![alt text](Mar-01-2022 20-31-58.gif"Demo Giphy")
