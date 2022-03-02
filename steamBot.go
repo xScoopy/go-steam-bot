@@ -43,11 +43,13 @@ func scrapeSteam() []GameInfo {
 
 	c.OnHTML("a.search_result_row", func(e *colly.HTMLElement) {
 		e.ForEach("div.responsive_search_name_combined", func(i int, h *colly.HTMLElement){
-			newGame := GameInfo{}
-			newGame.Name = h.ChildText("span.title")
-			newGame.ReleaseDate = h.ChildText("div.search_released")
-			newGame.Price = h.ChildText("div.search_price")
-			games = append(games, newGame)
+			if h.ChildText("div.discounted") != "" {
+				newGame := GameInfo{}
+				newGame.Name = h.ChildText("span.title")
+				newGame.ReleaseDate = h.ChildText("div.search_released")
+				newGame.Price = h.ChildText("div.discounted")
+				games = append(games, newGame)
+			}
 		} )
 	})
 	
