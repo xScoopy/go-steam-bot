@@ -1,5 +1,8 @@
 # go-steam-bot
 
+> Code for setting up Socket mode and message posting were adapted from multiple tutorials and the slack documentation. 
+> big thank you to 'Tech and beyond with Moss' on youtube and 'Percy Bolmer' for their intuitive articles and videos. 
+
 ## Project Description 
 
 This project was created to provide just a tiny bit of relief to those gamers grinding it out for 8+ hours a day. Through this go steam bot, a list of discounted top selling games on steam can be pulled up with just a few characters typed into a designated slack channel. Since most offices expect people to have high utilization rates, we can't have everyone surfing the steam store at work. This bot allows a quick scrape of steam store discounts so my fellow gamers can keep an eye on any deals too good to pass up while on their lunch break, waiting for a build to finish, etc., all while still in the slack workspace. 
