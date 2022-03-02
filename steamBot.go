@@ -85,7 +85,7 @@ func createJson(games []GameInfo, fileName string) error {
 func formatGames(games []GameInfo) string {
 	formattedGames := ""
 	for _, game := range games {
-		formattedGames += "Title: *" + game.Name + "* Price: *" + game.Price + "* Release: *" + game.ReleaseDate + "*\n"
+		formattedGames += "\nTitle: *" + game.Name + "* \nPrice:(original vs discounted) *" + game.Price + "* \nRelease: *" + game.ReleaseDate + "*\n"
 	}
 	return formattedGames
 }
